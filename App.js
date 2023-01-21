@@ -1,20 +1,62 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons'; // imports the Ionicans libray of useable images. 
 
-export default function App() {
+import MovieCollectionScreen from './screens/MovieCollectionScreen';
+import MovieDetailsScreen from './screens/MovieDetailsScreen';
+import MovieSearchScreen from './screens/MovieSearchScreen';
+
+const Stack = createNativeStackNavigator();
+const BottomTab = createBottomTabNavigator();
+
+function BottomTabNavigator(){
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+   <BottomTab.Navigator>
+     <BottomTab.Screen 
+      name="MovieSearchScreen" 
+      component={MovieSearchScreen} 
+      options={{
+        title: 'Movie Search',
+        tabBarIcon: ({color, size }) => (
+          <Ionicons name='search' size={size} color={color} />
+        )
+      }}
+      />
+     <BottomTab.Screen 
+      name="MovieCollectionScreen" 
+      component={MovieCollectionScreen}
+      options={{
+        title: 'The Collection',
+        tabBarIcon: ({color, size }) => (
+          <Ionicons name='film-outline' size={size} color={color} />
+        )
+      }}/>
+   </BottomTab.Navigator>
+   )
+ }
+export default function App() {
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  return (
+    <>
+    <StatusBar style='light'/> 
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+          name='BottomTabNavigator' 
+          component={BottomTabNavigator} 
+          options={{ headerShown: false }}
+          />
+        <Stack.Screen 
+          name='MovieDetailsScreen' 
+          component={MovieDetailsScreen} 
+          options={{ headerShown: false }}
+
+          />
+          
+      </Stack.Navigator>
+    </NavigationContainer>
+    </>
+  )
+}
