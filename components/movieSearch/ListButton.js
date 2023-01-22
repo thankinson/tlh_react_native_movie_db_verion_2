@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 4,
     padding: 8,
-    backgroundColor: 'green'
+    backgroundColor: 'blue',
+    elevation: 4
   },
   flat: {
     backgroundColor: 'transparent',
