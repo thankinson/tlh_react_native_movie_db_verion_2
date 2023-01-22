@@ -1,11 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-function Button({children, onPress, style}){
+function ListButton({children, onPress, style, item}){
 
   return (
     <View style={style}>
       <Pressable
-        onPress={onPress}
+        onPress={()=>onPress(item)}
         style={({pressed}) => pressed && styles.pressed}
       >
         <View style={styles.button}>
@@ -16,7 +16,7 @@ function Button({children, onPress, style}){
   )
 }
 
-export default Button;
+export default ListButton;
 
 const styles = StyleSheet.create({
   button: {

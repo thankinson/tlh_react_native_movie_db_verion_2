@@ -1,43 +1,27 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import { FlatList, StyleSheet } from "react-native";
 
 import Button from "../ui/Button";
+import ListButton from "./ListButton";
 
 function MovieList({movieResult, onPress}){
-
-  function MovieFound(){
-    if (!movieResult){
       return (
-        <View style={styles.textContainer}>
-          <Ionicons name="search" size={38} />
-          <Text style={styles.texFindFilm}>Use search to find film</Text>
-          <Ionicons name="search" size={38} />
-        </View>
-      )
-    } else {
-      return (
-        <>
+        
         <FlatList 
+          // contentContainerStyle={styles.listContainer}
           data={movieResult}
-          renderItem={(item)=>
-            <Button 
+          renderItem={({item})=>
+            <ListButton 
+              style={styles.button}
               item={item}
               onPress={onPress}>
                 {item.original_title}
-            </Button>
-            // <Text> {item.original_title}</Text>
+            </ListButton>
+          
             }
           keyExtractor={item => item.id}
         />
-        </>
+        
         )
-    }
-  }
-  return (
-    <>
-      <MovieFound />
-    </>
-  )
 }
 
 export default MovieList;
@@ -51,5 +35,11 @@ const styles = StyleSheet.create({
   texFindFilm: {
     fontSize: 24,
     fontWeight: 'bold'
+  },
+  listContainer:{
+    flexGrow: 1
+  },
+  button:{
+    margin: 5
   }
 })

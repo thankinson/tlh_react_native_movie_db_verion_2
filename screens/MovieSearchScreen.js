@@ -1,5 +1,6 @@
 import { useState } from "react";
-import {  StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 
 import MovieService  from '../store/MovieSearchService';
 import MovieList from "../components/movieSearch/MovieList";
@@ -30,6 +31,21 @@ function MovieSearchScreen({navigation}){
     setMovieResult(data)
   }
   
+  function ListReturned(){
+    if (!movieResult){
+      return (
+        <View style={styles.textContainer}>
+          <Ionicons name="search" size={38} />
+          <Text style={styles.texFindFilm}>Use search to find film</Text>
+          <Ionicons name="search" size={38} />
+        </View>
+      )
+    } else {
+      return (
+        <MovieList movieResult={movieResult} onPress={navigateTo}/>
+        )
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -44,10 +60,11 @@ function MovieSearchScreen({navigation}){
         <Button style={styles.button} onPress={searchMovieHandler} >Search</Button>
       </View>
       <View style={styles.listContainer}>
-        <MovieList 
+        <ListReturned />
+        {/* <MovieList 
           movieResult={movieResult}
           onPress={navigateTo}
-          />
+          /> */}
       </View>
     </View>
   )
@@ -61,13 +78,14 @@ const styles = StyleSheet.create({
     margin: 6
   },
   listContainer: {
-    flex: 1
+    flex: 1,
+    // backgroundColor: 'red'
   },
   searchContainer: {
-    flex: 1,
+    height: 150,
+    // backgroundColor: 'blue'
   },
   button:{
-  
     marginTop: 10
   }
 })
