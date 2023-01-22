@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     elevation: 5,
     marginBottom: 10,
+    elevation: 4
   },
   title: {
     fontSize: 16,
