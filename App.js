@@ -51,7 +51,6 @@ export default function App() {
         <Stack.Screen 
           name='MovieDetailsScreen' 
           component={MovieDetailsScreen} 
-          options={{ headerShown: false }}
 
           />
           
