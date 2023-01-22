@@ -27,15 +27,6 @@ function MovieList({movieResult, onPress}){
 export default MovieList;
 
 const styles = StyleSheet.create({
-  textContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  texFindFilm: {
-    fontSize: 24,
-    fontWeight: 'bold'
-  },
   listContainer:{
     flexGrow: 1
   },

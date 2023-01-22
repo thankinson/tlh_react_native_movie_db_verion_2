@@ -61,10 +61,6 @@ function MovieSearchScreen({navigation}){
       </View>
       <View style={styles.listContainer}>
         <ListReturned />
-        {/* <MovieList 
-          movieResult={movieResult}
-          onPress={navigateTo}
-          /> */}
       </View>
     </View>
   )
@@ -87,5 +83,14 @@ const styles = StyleSheet.create({
   },
   button:{
     marginTop: 10
-  }
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  texFindFilm: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
 })
