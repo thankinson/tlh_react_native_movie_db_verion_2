@@ -1,13 +1,22 @@
+import { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+
 import Button from "../components/ui/Button";
+import ModalButton from "../components/ui/ModalButton";
+import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
 
 function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
+  const [isVisable, setIsVisable] = useState(false)
 
   // navigation.setOptions({ title: film.title })
 
   function closePressHandler(){
     navigation.goBack();
+  }
+
+  function onShowModal(){
+    setIsVisable(true)
   }
 
   return (
@@ -17,7 +26,13 @@ function MovieDetailsScreen({route, navigation}){
         <Text style={styles.title}>{film.title}</Text>
       </View>
       <Image style={styles.image} source={{uri: `https://image.tmdb.org/t/p/w300${film.poster}`}} />
-      <Text>{film.overview}</Text>
+      <Text style={styles.subTitle}>Synopsis</Text>
+      <Text>{film.overview.substr(0, 30)}... <ModalButton onPress={onShowModal} >read more</ModalButton></Text>
+        <MovieDescriptionModal 
+          film={film} 
+          setIsVisable={setIsVisable}
+          isVisable={isVisable}
+          />
       <View style={styles.addRemoveContainer}>
         <Button style={styles.addRemove} buttonColor={styles.buttonColor}>remove</Button>
         <Button style={styles.addRemove} >add</Button>
@@ -44,8 +59,13 @@ const styles = StyleSheet.create({
     elevation: 4
   },
   title: {
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: 'bold'
+  },
+  subTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    padding: 10
   },
   buttonContainer:{
     alignItems: 'center',
