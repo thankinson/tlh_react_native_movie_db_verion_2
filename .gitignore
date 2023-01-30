@@ -9,6 +9,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-MovieSearchService.js
+*.env
 # macOS
 .DS_Store
