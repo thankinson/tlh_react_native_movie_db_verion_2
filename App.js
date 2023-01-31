@@ -2,7 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons'; // imports the Ionicans libray of useable images. 
+import { Ionicons } from '@expo/vector-icons'; // imports the Ionicans libray of useable images.
+
+import MovieContextProvider from './store/movie-context';
 
 import MovieCollectionScreen from './screens/MovieCollectionScreen';
 import MovieDetailsScreen from './screens/MovieDetailsScreen';
@@ -40,23 +42,25 @@ export default function App() {
 
   return (
     <>
-    <StatusBar style='light'/> 
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-          name='BottomTabNavigator' 
-          component={BottomTabNavigator} 
-          options={{ headerShown: false }}
-          />
-        <Stack.Screen 
-          name='MovieDetailsScreen' 
-          component={MovieDetailsScreen} 
-          options={{ headerShown: false }}
+    <StatusBar style='light'/>
+    <MovieContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+            name='BottomTabNavigator' 
+            component={BottomTabNavigator} 
+            options={{ headerShown: false }}
+            />
+          <Stack.Screen 
+            name='MovieDetailsScreen' 
+            component={MovieDetailsScreen} 
+            options={{ headerShown: false }}
 
-          />
-          
-      </Stack.Navigator>
-    </NavigationContainer>
+            />
+            
+        </Stack.Navigator>
+      </NavigationContainer>
+    </MovieContextProvider> 
     </>
   )
 }

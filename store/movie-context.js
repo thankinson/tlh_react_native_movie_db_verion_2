@@ -1,4 +1,3 @@
-import { func } from "prop-types";
 import { createContext, useReducer } from "react";
 
 export const MovieContext = createContext({
@@ -22,7 +21,7 @@ function movieReducer(state, action){
 };
 
 function MovieContextProvider({children}){
-  const [expensesState, dispatch] = useReducer(expensesReducer, []);
+  const [movieState, dispatch] = useReducer(movieReducer, []);
   
   function addMovie(movieData){
     dispatch({type: 'ADD', payload: movieData})
@@ -44,9 +43,9 @@ function MovieContextProvider({children}){
   };
 
   return (
-    <MovieContext value={value}>
+    <MovieContext.Provider value={value}>
       {children}
-    </MovieContext>
+    </MovieContext.Provider>
   )
 };
 

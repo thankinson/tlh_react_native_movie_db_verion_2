@@ -1,17 +1,47 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import Button from "../components/ui/Button";
 import ModalButton from "../components/ui/ModalButton";
 import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
 
+import { MovieContext } from "../store/movie-context";
+import { movieCheck, storeMovie } from "../utils/http";
+
 function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
+  
+  const movieCtx = useContext(MovieContext);
   const [isVisable, setIsVisable] = useState(false)
+  const [error, setError] = useState();
 
+const selectedMovie = movieCtx.movies.find(
+  (movies) => movies.id 
+)
   // navigation.setOptions({ title: film.title })
 
   function closePressHandler(){
+    navigation.goBack();
+  }
+
+  async function addMovieHandler(){
+    try {
+      const movieData = {
+        movieId: film.movieId,
+        title: film.title,
+        about: film.overview,
+        poster: film.poster
+      }
+      await storeMovie(movieData)
+      // const id = await storeMovie(movieData)
+      // movieCtx.addMovie({...movieData, id: id})
+      navigation.goBack();  
+    } catch (error) {
+      setError('Could not add film')
+    }
+  }
+
+  function removeMovieHandler(){
     navigation.goBack();
   }
 
@@ -34,8 +64,8 @@ function MovieDetailsScreen({route, navigation}){
           isVisable={isVisable}
           />
       <View style={styles.addRemoveContainer}>
-        <Button style={styles.addRemove} buttonColor={styles.buttonColor}>remove</Button>
-        <Button style={styles.addRemove} >add</Button>
+        <Button style={styles.addRemove} onPress={removeMovieHandler} buttonColor={styles.buttonColor}>remove</Button>
+        <Button style={styles.addRemove} onPress={addMovieHandler} >add</Button>
       </View>
     </View>
   )
