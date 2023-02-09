@@ -7,13 +7,33 @@ import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
 
 import { MovieContext } from "../store/movie-context";
 import { movieCheck, storeMovie } from "../utils/http";
+import { addMovie } from "../utils/database";
+import { MoviesDb } from "../models/movies";
 
 function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
-  
+  const [movieAdd, setMovieAdd] = useState()
+
   const movieCtx = useContext(MovieContext);
   const [isVisable, setIsVisable] = useState(false)
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
+
+  useEffect(()=>{
+    function setFilm(){
+      const movieData = {
+        title: film.title,
+        about: film.overview,
+        poster: film.poster,
+        movieId: film.movieId
+      }
+      setMovieAdd(movieData)
+      console.log(movieData)
+    }
+    if (film){
+      setFilm()
+    }
+    console.log(movieAdd)
+  }, [film])
 
 const selectedMovie = movieCtx.movies.find(
   (movies) => movies.id 
@@ -26,18 +46,20 @@ const selectedMovie = movieCtx.movies.find(
 
   async function addMovieHandler(){
     try {
-      const movieData = {
-        movieId: film.movieId,
-        title: film.title,
-        about: film.overview,
-        poster: film.poster
-      }
-      await storeMovie(movieData)
+      // const movie = new MoviesDb({
+      //   title: film.title,
+      //   about: film.overview,
+      //   poster: film.poster,
+      //   movieId: film.movieId
+      // })
+      // await storeMovie(movieData)
+      await addMovie(movieAdd)
       // const id = await storeMovie(movieData)
       // movieCtx.addMovie({...movieData, id: id})
       navigation.goBack();  
     } catch (error) {
-      setError('Could not add film')
+      console.log(error)
+      // setError('Could not add film')
     }
   }
 

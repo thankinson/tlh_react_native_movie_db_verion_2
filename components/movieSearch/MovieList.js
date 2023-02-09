@@ -4,8 +4,8 @@ import Button from "../ui/Button";
 import ListButton from "./ListButton";
 
 function MovieList({movieResult, onPress}){
-      return (
-        
+      
+      return (  
         <FlatList 
           // contentContainerStyle={styles.listContainer}
           data={movieResult}

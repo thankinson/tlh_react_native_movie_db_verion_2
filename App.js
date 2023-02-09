@@ -9,6 +9,8 @@ import MovieContextProvider from './store/movie-context';
 import MovieCollectionScreen from './screens/MovieCollectionScreen';
 import MovieDetailsScreen from './screens/MovieDetailsScreen';
 import MovieSearchScreen from './screens/MovieSearchScreen';
+import { useEffect, useState } from 'react';
+import { init } from './utils/database';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -39,6 +41,14 @@ function BottomTabNavigator(){
    )
  }
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState(false);
+  useEffect(()=> {
+    init().then(()=>{
+      setDbInitialized(true)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  })
 
   return (
     <>
