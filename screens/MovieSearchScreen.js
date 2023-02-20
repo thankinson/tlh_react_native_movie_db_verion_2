@@ -16,7 +16,7 @@ function MovieSearchScreen({navigation}){
       'MovieDetailsScreen',
       {
         film: {
-          id: item.id,
+          movieId: item.id,
           title: item.original_title, 
           poster: item.poster_path,
           overview: item.overview

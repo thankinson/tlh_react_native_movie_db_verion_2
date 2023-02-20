@@ -4,8 +4,8 @@ import Button from "../ui/Button";
 import ListButton from "./ListButton";
 
 function MovieList({movieResult, onPress}){
-      return (
-        
+      
+      return (  
         <FlatList 
           // contentContainerStyle={styles.listContainer}
           data={movieResult}
@@ -14,7 +14,7 @@ function MovieList({movieResult, onPress}){
               style={styles.button}
               item={item}
               onPress={onPress}>
-                {item.original_title}
+                {item.original_title ? item.original_title : item.title }
             </ListButton>
           
             }

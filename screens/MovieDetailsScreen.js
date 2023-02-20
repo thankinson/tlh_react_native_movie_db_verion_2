@@ -1,17 +1,62 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import Button from "../components/ui/Button";
 import ModalButton from "../components/ui/ModalButton";
 import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
 
+import { MovieContext } from "../store/movie-context";
+import { movieCheck, storeMovie } from "../utils/http";
+// import { addMovie } from "../utils/database";
+import { MoviesDb } from "../models/movies";
+
 function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
-  const [isVisable, setIsVisable] = useState(false)
+  const [movieAdd, setMovieAdd] = useState()
 
+  const movieCtx = useContext(MovieContext);
+  const [isVisable, setIsVisable] = useState(false)
+  // const [error, setError] = useState();
+
+  useEffect(()=>{
+    function setFilm(){
+      const movieData = {
+        title: film.title,
+        about: film.overview,
+        poster: film.poster,
+        movieId: film.movieId
+      }
+      setMovieAdd(movieData)
+      console.log(movieData)
+    }
+    if (film){
+      setFilm()
+    }
+    console.log(movieAdd)
+  }, [film])
+
+const selectedMovie = movieCtx.movies.find(
+  (movies) => movies.id 
+)
   // navigation.setOptions({ title: film.title })
 
   function closePressHandler(){
+    navigation.goBack();
+  }
+
+  async function addMovieHandler(){
+    try {
+
+      const id = await storeMovie(movieAdd)
+      movieCtx.addMovie({...movieAdd, id: id})
+      navigation.goBack();  
+    } catch (error) {
+      console.log(error)
+      // setError('Could not add film')
+    }
+  }
+
+  function removeMovieHandler(){
     navigation.goBack();
   }
 
@@ -34,8 +79,8 @@ function MovieDetailsScreen({route, navigation}){
           isVisable={isVisable}
           />
       <View style={styles.addRemoveContainer}>
-        <Button style={styles.addRemove} buttonColor={styles.buttonColor}>remove</Button>
-        <Button style={styles.addRemove} >add</Button>
+        <Button style={styles.addRemove} onPress={removeMovieHandler} buttonColor={styles.buttonColor}>remove</Button>
+        <Button style={styles.addRemove} onPress={addMovieHandler} >add</Button>
       </View>
     </View>
   )
