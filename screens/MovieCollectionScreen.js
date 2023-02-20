@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MovieList from "../components/movieSearch/MovieList";
 import { MovieContext } from "../store/movie-context";
-import { fetchMovies } from "../utils/http";
 
 function MovieCollectionScreen({navigation}){
   const [myCollection, setMycollection] = useState([]);
