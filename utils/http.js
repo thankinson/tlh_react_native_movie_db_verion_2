@@ -32,7 +32,6 @@ export async function fetchMovies(){
       };
       myMovies.push(movieObj);
     };
-    console.log(myMovies)
     return myMovies;
   } catch (error) {
     console.log('ERROR: Failed to load database', error);

@@ -1,17 +1,20 @@
 import { useIsFocused } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MovieList from "../components/movieSearch/MovieList";
+import { MovieContext } from "../store/movie-context";
 import { fetchMovies } from "../utils/http";
 
 function MovieCollectionScreen({navigation}){
-  const [myCollection, setMycollection] = useState();
-
+  const [myCollection, setMycollection] = useState([]);
+  const moviesCtx = useContext(MovieContext)
+  
   const isFocused = useIsFocused();
   useEffect(()=>{
-    async function listMovies(){
-      const movies = await fetchMovies();
-      setMycollection(movies)
+    function listMovies(){
+      // const movies = await fetchMovies();
+      // setMycollection(movies)
+      setMycollection(moviesCtx.moviesInDb)
     }
 
     if (isFocused){
