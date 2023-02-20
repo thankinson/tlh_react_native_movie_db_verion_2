@@ -7,7 +7,7 @@ import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
 
 import { MovieContext } from "../store/movie-context";
 import { movieCheck, storeMovie } from "../utils/http";
-import { addMovie } from "../utils/database";
+// import { addMovie } from "../utils/database";
 import { MoviesDb } from "../models/movies";
 
 function MovieDetailsScreen({route, navigation}){
@@ -46,16 +46,9 @@ const selectedMovie = movieCtx.movies.find(
 
   async function addMovieHandler(){
     try {
-      // const movie = new MoviesDb({
-      //   title: film.title,
-      //   about: film.overview,
-      //   poster: film.poster,
-      //   movieId: film.movieId
-      // })
-      // await storeMovie(movieData)
-      await addMovie(movieAdd)
-      // const id = await storeMovie(movieData)
-      // movieCtx.addMovie({...movieData, id: id})
+
+      const id = await storeMovie(movieAdd)
+      movieCtx.addMovie({...movieAdd, id: id})
       navigation.goBack();  
     } catch (error) {
       console.log(error)

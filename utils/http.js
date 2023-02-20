@@ -20,7 +20,7 @@ export async function storeMovie(movieData){
 
 export async function fetchMovies(){
   try {
-    const response = await axios.get(`${API_DB}/mymovies.json`, movieData);
+    const response = await axios.get(`${API_DB}/mymovies.json`);
     const myMovies = [];
     for (const key in response.data){
       const movieObj = {
@@ -32,6 +32,7 @@ export async function fetchMovies(){
       };
       myMovies.push(movieObj);
     };
+    console.log(myMovies)
     return myMovies;
   } catch (error) {
     console.log('ERROR: Failed to load database', error);

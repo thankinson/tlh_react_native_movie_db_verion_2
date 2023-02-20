@@ -2,15 +2,15 @@ import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MovieList from "../components/movieSearch/MovieList";
-import { getAllMovies } from "../utils/database";
+import { fetchMovies } from "../utils/http";
 
-function MovieCollectionScreen(){
+function MovieCollectionScreen({navigation}){
   const [myCollection, setMycollection] = useState();
 
   const isFocused = useIsFocused();
   useEffect(()=>{
     async function listMovies(){
-      const movies = await getAllMovies();
+      const movies = await fetchMovies();
       setMycollection(movies)
     }
 
@@ -18,6 +18,20 @@ function MovieCollectionScreen(){
       listMovies()
     }
   }, [isFocused])
+
+  function navigateTo(item){
+    navigation.navigate(
+      'MovieDetailsScreen',
+      {
+        film: {
+          movieId: item.movieId,
+          title: item.title, 
+          poster: item.poster,
+          overview: item.about
+        }
+      }
+    )
+  }
 
   if (!myCollection){
     return (
@@ -27,7 +41,7 @@ function MovieCollectionScreen(){
       )
     }
 
-  return <MovieList movieResult={myCollection}/>
+  return <MovieList onPress={navigateTo} movieResult={myCollection}/>
 }
 
 export default MovieCollectionScreen;

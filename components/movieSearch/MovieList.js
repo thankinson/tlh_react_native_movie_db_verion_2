@@ -14,7 +14,7 @@ function MovieList({movieResult, onPress}){
               style={styles.button}
               item={item}
               onPress={onPress}>
-                {item.original_title}
+                {item.original_title ? item.original_title : item.title }
             </ListButton>
           
             }
