@@ -6,17 +6,15 @@ import ModalButton from "../components/ui/ModalButton";
 import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
 
 import { MovieContext } from "../store/movie-context";
-import { movieCheck, storeMovie } from "../utils/http";
-// import { addMovie } from "../utils/database";
-import { MoviesDb } from "../models/movies";
+import { fetchMovies } from "../utils/http";
 
 function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
   const [movieAdd, setMovieAdd] = useState()
+  const [myCollection, setMycollection] = useState([]);
 
   const movieCtx = useContext(MovieContext);
   const [isVisable, setIsVisable] = useState(false)
-  // const [error, setError] = useState();
 
   useEffect(()=>{
     function setFilm(){
@@ -27,18 +25,39 @@ function MovieDetailsScreen({route, navigation}){
         movieId: film.movieId
       }
       setMovieAdd(movieData)
-      console.log(movieData)
     }
     if (film){
       setFilm()
     }
-    console.log(movieAdd)
   }, [film])
 
-const selectedMovie = movieCtx.movies.find(
-  (movies) => movies.id 
-)
-  // navigation.setOptions({ title: film.title })
+  useEffect(()=>{
+    async function listMovies(){
+      const movies = await fetchMovies();
+      setMycollection(movies)
+    }
+    
+    listMovies()
+    
+  }, [])
+/////////////////////////////////////////////////////////////////////////////////////////
+// this realy needs to be run before render
+  function checkDb(movie){
+    return movie.movieId === film.movieId
+  }
+
+  function ButtonOptions(){
+    if (myCollection.find(checkDb)) {
+      return <Button style={styles.addRemove} onPress={removeMovieHandler} buttonColor={styles.buttonColor}>remove</Button>
+    } else {
+      return <Button style={styles.addRemove} onPress={addMovieHandler} >add</Button>
+    }  
+
+  }
+////////////////////////////////////////////////////////////////////////////////////////////////
+  const selectedMovie = movieCtx.movies.find(
+    (movies) => movies.id 
+  )
 
   function closePressHandler(){
     navigation.goBack();
@@ -46,13 +65,10 @@ const selectedMovie = movieCtx.movies.find(
 
   async function addMovieHandler(){
     try {
-
-      const id = await storeMovie(movieAdd)
-      movieCtx.addMovie({...movieAdd, id: id})
+      movieCtx.addMovie({...movieAdd})
       navigation.goBack();  
     } catch (error) {
       console.log(error)
-      // setError('Could not add film')
     }
   }
 
@@ -67,7 +83,6 @@ const selectedMovie = movieCtx.movies.find(
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        {/* <Button style={styles.button} buttonColor={styles.buttonColor} onPress={closePressHandler}>close</Button> */}
         <Text style={styles.title}>{film.title}</Text>
       </View>
       <Image style={styles.image} source={{uri: `https://image.tmdb.org/t/p/w300${film.poster}`}} />
@@ -79,8 +94,7 @@ const selectedMovie = movieCtx.movies.find(
           isVisable={isVisable}
           />
       <View style={styles.addRemoveContainer}>
-        <Button style={styles.addRemove} onPress={removeMovieHandler} buttonColor={styles.buttonColor}>remove</Button>
-        <Button style={styles.addRemove} onPress={addMovieHandler} >add</Button>
+        <ButtonOptions />
       </View>
     </View>
   )
