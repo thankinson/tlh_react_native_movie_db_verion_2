@@ -33,12 +33,10 @@ function MovieDetailsScreen({route, navigation}){
 
   useEffect(()=>{
     async function listMovies(){
-      const movies = await fetchMovies();
+      const movies = movieCtx.moviesInDb
       setMycollection(movies)
     }
-    
     listMovies()
-    
   }, [])
 /////////////////////////////////////////////////////////////////////////////////////////
 // this realy needs to be run before render
@@ -52,7 +50,6 @@ function MovieDetailsScreen({route, navigation}){
     } else {
       return <Button style={styles.addRemove} onPress={addMovieHandler} >add</Button>
     }  
-
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////
   const selectedMovie = movieCtx.movies.find(
