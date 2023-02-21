@@ -12,7 +12,7 @@ async function movieReducer(state, action){
   switch(action.type){
     case 'ADD':
       await storeMovie(action.payload)
-      return [action.payload, ...state];
+      return [action.payload];
     case 'SET':
       return inverted = action.payload.reverse();
     case 'DELETE':

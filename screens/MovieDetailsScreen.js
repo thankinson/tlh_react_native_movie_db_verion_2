@@ -6,7 +6,6 @@ import ModalButton from "../components/ui/ModalButton";
 import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
 
 import { MovieContext } from "../store/movie-context";
-import { fetchMovies } from "../utils/http";
 
 function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
@@ -28,36 +27,29 @@ function MovieDetailsScreen({route, navigation}){
     }
     if (film){
       setFilm()
+      setMycollection(movieCtx.moviesInDb)
     }
   }, [film])
 
   useEffect(()=>{
-    async function listMovies(){
-      const movies = await fetchMovies();
-      setMycollection(movies)
-    }
-    
-    listMovies()
-    
+    console.log(myCollection)    
   }, [])
 /////////////////////////////////////////////////////////////////////////////////////////
 // this realy needs to be run before render
-  function checkDb(movie){
-    return movie.movieId === film.movieId
-  }
+// function checkDb(movie){
+//   return movie.movieId === film.movieId
+// }
 
-  function ButtonOptions(){
-    if (myCollection.find(checkDb)) {
-      return <Button style={styles.addRemove} onPress={removeMovieHandler} buttonColor={styles.buttonColor}>remove</Button>
-    } else {
-      return <Button style={styles.addRemove} onPress={addMovieHandler} >add</Button>
-    }  
+//   if (myCollection.find(checkDb)){
+//     return console.log('Movie in database')
+//   } else {
+//     return console.log('Movie not in database')
+//   }
 
-  }
 ////////////////////////////////////////////////////////////////////////////////////////////////
-  const selectedMovie = movieCtx.movies.find(
-    (movies) => movies.id 
-  )
+  // const selectedMovie = movieCtx.movies.find(
+  //   (movies) => movies.id 
+  // )
 
   function closePressHandler(){
     navigation.goBack();
@@ -94,7 +86,9 @@ function MovieDetailsScreen({route, navigation}){
           isVisable={isVisable}
           />
       <View style={styles.addRemoveContainer}>
-        <ButtonOptions />
+        {/* <ButtonOptions /> */}
+        <Button style={styles.addRemove} onPress={removeMovieHandler} buttonColor={styles.buttonColor}>remove</Button>
+      <Button style={styles.addRemove} onPress={addMovieHandler} >add</Button>
       </View>
     </View>
   )
