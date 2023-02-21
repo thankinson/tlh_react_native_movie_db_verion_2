@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 
@@ -6,12 +6,16 @@ import MovieService  from '../store/MovieSearchService';
 import MovieList from "../components/movieSearch/MovieList";
 import InputText from "../components/movieSearch/InputText";
 import Button from "../components/ui/Button";
+import { MovieContext } from "../store/movie-context";
+
 function MovieSearchScreen({navigation}){
   const [searchMovie, setMovieSearch] = useState('');
   const [movieResult, setMovieResult] = useState('');
   console.log(searchMovie)
+  const movieCtx = useContext(MovieContext);
 
   function navigateTo(item){
+    movieCtx.checkMovieInDb(item.id)
     navigation.navigate(
       'MovieDetailsScreen',
       {

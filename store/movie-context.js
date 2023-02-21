@@ -24,7 +24,8 @@ async function movieReducer(state, action){
 
 function MovieContextProvider({children}){
   const [movieState, dispatch] = useReducer(movieReducer, []);
-  const [moviesInDb, setMoviesInDb] = useState([])
+  const [moviesInDb, setMoviesInDb] = useState([]);
+  const [isMovieInDb, setIsMovieInDb] = useState(false);
   useEffect(()=> {
     async function listMovies(){
       const movies = await fetchMovies()
@@ -33,7 +34,20 @@ function MovieContextProvider({children}){
     listMovies()
   }, [addMovie, deleteMovie])
   
-function addMovie(movieData){
+  function checkMovieInDb(movieData){
+    function checkDb(movie){
+      return movie.movieId === movieData.id
+    }
+
+    if (moviesInDb.find(checkDb)){
+      console.log('movie is in db')
+      setIsMovieInDb(true)
+    } else {
+      setIsMovieInDb(false)
+    }
+  }
+
+  function addMovie(movieData){
     dispatch({type: 'ADD', payload: movieData})
   };
 
@@ -48,6 +62,7 @@ function addMovie(movieData){
   const value = {
     movies: movieState,
     moviesInDb: moviesInDb,
+    checkMovieInDb: checkMovieInDb,
     addMovie: addMovie,
     setMovie: setMovie,
     deleteMovie: deleteMovie
