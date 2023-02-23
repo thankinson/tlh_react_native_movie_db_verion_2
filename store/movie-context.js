@@ -3,7 +3,7 @@ import { fetchMovies, storeMovie } from "../utils/http";
 
 export const MovieContext = createContext({
   movies: [],
-  addMovie: ({title, about, poster}) => {},
+  addMovie: ({title, about, poster, movieId}) => {},
   setMovie: (movies) => {},
   deleteMovie: (id) => {}
 });
@@ -11,8 +11,8 @@ export const MovieContext = createContext({
 async function movieReducer(state, action){
   switch(action.type){
     case 'ADD':
-      await storeMovie(action.payload)
-      return [action.payload, ...state];
+      // await storeMovie(action.payload)
+      return [action.payload];
     case 'SET':
       return inverted = action.payload.reverse();
     case 'DELETE':
@@ -25,6 +25,7 @@ async function movieReducer(state, action){
 function MovieContextProvider({children}){
   const [movieState, dispatch] = useReducer(movieReducer, []);
   const [moviesInDb, setMoviesInDb] = useState([])
+  
   useEffect(()=> {
     async function listMovies(){
       const movies = await fetchMovies()
@@ -33,7 +34,8 @@ function MovieContextProvider({children}){
     listMovies()
   }, [addMovie, deleteMovie])
   
-function addMovie(movieData){
+  function addMovie(movieData){
+    // await storeMovie(movieData)
     dispatch({type: 'ADD', payload: movieData})
   };
 
