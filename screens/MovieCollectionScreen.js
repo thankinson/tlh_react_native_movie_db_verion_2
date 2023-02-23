@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import MovieList from "../components/movieSearch/MovieList";
 import { MovieContext } from "../store/movie-context";
 
+import { GlobalStyles } from "../constants/GlobalColors";
 function MovieCollectionScreen({navigation}){
   const [myCollection, setMycollection] = useState([]);
   const moviesCtx = useContext(MovieContext)
@@ -11,9 +12,8 @@ function MovieCollectionScreen({navigation}){
   const isFocused = useIsFocused();
   useEffect(()=>{
     function listMovies(){
-      // const movies = await fetchMovies();
-      // setMycollection(movies)
-      setMycollection(moviesCtx.moviesInDb)
+      const movieData = moviesCtx.moviesInDb
+      setMycollection(movieData)
     }
 
     if (isFocused){
@@ -26,6 +26,7 @@ function MovieCollectionScreen({navigation}){
       'MovieDetailsScreen',
       {
         film: {
+          id: item.id,
           movieId: item.movieId,
           title: item.title, 
           poster: item.poster,
@@ -43,7 +44,12 @@ function MovieCollectionScreen({navigation}){
       )
     }
 
-  return <MovieList onPress={navigateTo} movieResult={myCollection}/>
+  return (
+    <View style={styles.container}>
+      <MovieList onPress={navigateTo} movieResult={myCollection}/>
+    </View>
+    )
+
 }
 
 export default MovieCollectionScreen;
@@ -52,7 +58,14 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: GlobalStyles.colors.primary10
+  },
+  container: {
+    flex: 1,
+    backgroundColor: GlobalStyles.colors.primary10,
+    paddingHorizontal: 10,
+    paddingTop: 10
   },
   text: {
     fontWeight: 'bold',

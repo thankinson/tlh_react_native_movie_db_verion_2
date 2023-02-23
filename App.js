@@ -11,16 +11,23 @@ import MovieDetailsScreen from './screens/MovieDetailsScreen';
 import MovieSearchScreen from './screens/MovieSearchScreen';
 import { useEffect, useState } from 'react';
 import { init } from './utils/database';
+import { GlobalStyles } from './constants/GlobalColors';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator(){
   return (
-   <BottomTab.Navigator>
+   <BottomTab.Navigator
+   screenOptions={{
+    headerStyle: {backgroundColor: GlobalStyles.colors.primary01},
+    headerTintColor: GlobalStyles.colors.text01,
+    tabBarStyle: { backgroundColor: GlobalStyles.colors.primary01}
+   }}>
      <BottomTab.Screen 
       name="MovieSearchScreen" 
       component={MovieSearchScreen} 
+
       options={{
         title: 'Movie Search',
         tabBarIcon: ({color, size }) => (

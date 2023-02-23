@@ -3,7 +3,7 @@ import { fetchMovies, storeMovie } from "../utils/http";
 
 export const MovieContext = createContext({
   movies: [],
-  addMovie: ({title, about, poster}) => {},
+  addMovie: ({title, about, poster, movieId}) => {},
   setMovie: (movies) => {},
   deleteMovie: (id) => {}
 });
@@ -11,8 +11,8 @@ export const MovieContext = createContext({
 async function movieReducer(state, action){
   switch(action.type){
     case 'ADD':
-      await storeMovie(action.payload)
-      return [action.payload, ...state];
+      // await storeMovie(action.payload)
+      return [action.payload];
     case 'SET':
       return inverted = action.payload.reverse();
     case 'DELETE':
@@ -25,8 +25,7 @@ async function movieReducer(state, action){
 function MovieContextProvider({children}){
   const [movieState, dispatch] = useReducer(movieReducer, []);
   const [moviesInDb, setMoviesInDb] = useState([])
-  const [inDb, setInDb] = useState()
-
+  
   useEffect(()=> {
     async function listMovies(){
       const movies = await fetchMovies()
@@ -35,16 +34,8 @@ function MovieContextProvider({children}){
     listMovies()
   }, [addMovie, deleteMovie])
   
-  function checkMovieInDb(movieData){
-    const checkMovie = moviesInDb.find((movie)=> movie.movieId === movieData.id)
-    if (!checkMovie){
-      setInDb(false)
-      return;
-    }
-    setInDb(true)
-  }
-
   function addMovie(movieData){
+    // await storeMovie(movieData)
     dispatch({type: 'ADD', payload: movieData})
   };
 
@@ -59,8 +50,6 @@ function MovieContextProvider({children}){
   const value = {
     movies: movieState,
     moviesInDb: moviesInDb,
-    inDb: inDb,
-    checkMovieInDb: checkMovieInDb,
     addMovie: addMovie,
     setMovie: setMovie,
     deleteMovie: deleteMovie

@@ -1,21 +1,20 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import { MovieContext } from "../store/movie-context";
 
 import MovieService  from '../store/MovieSearchService';
 import MovieList from "../components/movieSearch/MovieList";
 import InputText from "../components/movieSearch/InputText";
 import Button from "../components/ui/Button";
+import { GlobalStyles } from "../constants/GlobalColors";
 function MovieSearchScreen({navigation}){
   const [searchMovie, setMovieSearch] = useState('');
   const [movieResult, setMovieResult] = useState('');
+
   console.log(searchMovie)
-  
-  // const movieCtx = useContext(MovieContext)
+
 
   function navigateTo(item){
-    // movieCtx.checkMovieInDb(item.id)
     navigation.navigate(
       'MovieDetailsScreen',
       {
@@ -39,9 +38,11 @@ function MovieSearchScreen({navigation}){
     if (!movieResult){
       return (
         <View style={styles.textContainer}>
-          <Ionicons name="search" size={38} />
-          <Text style={styles.texFindFilm}>Use search to find film</Text>
-          <Ionicons name="search" size={38} />
+          <Ionicons 
+            name="search" 
+            size={128} 
+            color={GlobalStyles.colors.text01}/>
+          <Text style={styles.texFindFilm}>Use search bar to find film</Text>
         </View>
       )
     } else {
@@ -52,12 +53,16 @@ function MovieSearchScreen({navigation}){
   }
 
   return (
+    <View style={styles.mainContainer}>
     <View style={styles.container}>
       <View style={styles.searchContainer} >
         <InputText 
           label='Movie Search'
           textInputConfig={{
-            placeholder: 'Search....',
+            placeholder: 'Search here....',
+            placeholderTextColor: GlobalStyles.colors.text01,
+            borderColor: GlobalStyles.colors.text01,
+            color: GlobalStyles.colors.text01,
             onChangeText: setMovieSearch
           }}
         />
@@ -67,34 +72,39 @@ function MovieSearchScreen({navigation}){
         <ListReturned />
       </View>
     </View>
+    </View>
   )
 }
 
 export default MovieSearchScreen;
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: GlobalStyles.colors.primary10
+  },
   container:{
     flex: 1,
     margin: 6
   },
   listContainer: {
     flex: 1,
-    // backgroundColor: 'red'
   },
   searchContainer: {
     height: 150,
-    // backgroundColor: 'blue'
   },
   button:{
     marginTop: 10
   },
   textContainer: {
-    flexDirection: 'row',
+    marginTop: '30%',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
   },
   texFindFilm: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: GlobalStyles.colors.text01
   },
 })
