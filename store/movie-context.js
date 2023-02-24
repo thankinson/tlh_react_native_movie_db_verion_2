@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer, useState } from "react";
-import { fetchMovies, storeMovie } from "../utils/http";
+import { deleteMovie, fetchMovies, storeMovie } from "../utils/http";
 
 export const MovieContext = createContext({
   movies: [],
@@ -12,11 +12,11 @@ async function movieReducer(state, action){
   switch(action.type){
     case 'ADD':
       // await storeMovie(action.payload)
-      return [action.payload];
-    case 'SET':
-      return inverted = action.payload.reverse();
+      // return [action.payload];
+      return await storeMovie(action.payload)
     case 'DELETE':
-      return state.filter((movies) => movies.id != action.payload);
+      // return state.filter((movies) => movies.id != action.payload);
+      return await deleteMovie(action.payload)
     default:
       return state;
   }

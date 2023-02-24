@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "tlh_react_movie-db_rebuild",
-    "slug": "tlh_react_movie-db_rebuild",
-    "version": "1.0.0",
+    "name": "Movies",
+    "slug": "Movies",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,13 +21,21 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": "3",
+      "versionName": "1.0",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.thankinson.Movies"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8ebeb492-50a6-4733-bb8a-4167d0a59c6d"
+      }
     }
   }
 }

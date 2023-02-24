@@ -1,6 +1,5 @@
 import { FlatList, StyleSheet } from "react-native";
 
-import Button from "../ui/Button";
 import ListButton from "./ListButton";
 
 function MovieList({movieResult, onPress}){
@@ -13,7 +12,8 @@ function MovieList({movieResult, onPress}){
             <ListButton 
               style={styles.button}
               item={item}
-              onPress={onPress}>
+              onPress={onPress}
+              >
                 {item.original_title ? item.original_title : item.title }
             </ListButton>
           
