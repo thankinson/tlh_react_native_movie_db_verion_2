@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MovieList from "../components/movieSearch/MovieList";
 import { MovieContext } from "../store/movie-context";
-
+import { deleteMovie } from "../utils/http";
 import { GlobalStyles } from "../constants/GlobalColors";
 function MovieCollectionScreen({navigation}){
   const [myCollection, setMycollection] = useState([]);
@@ -19,7 +19,7 @@ function MovieCollectionScreen({navigation}){
     if (isFocused){
       listMovies()
     }
-  }, [isFocused])
+  }, [isFocused, moviesCtx.deleteMovie])
 
   function navigateTo(item){
     navigation.navigate(
@@ -42,11 +42,11 @@ function MovieCollectionScreen({navigation}){
         <Text style={styles.text}>Loading Movie collection...</Text>
       </View>
       )
-    }
+    };
 
   return (
     <View style={styles.container}>
-      <MovieList onPress={navigateTo} movieResult={myCollection}/>
+      <MovieList onPress={navigateTo}  movieResult={myCollection}/>
     </View>
     )
 

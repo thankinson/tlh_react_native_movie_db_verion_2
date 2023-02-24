@@ -40,20 +40,16 @@ function MovieDetailsScreen({route, navigation}){
     listMovies()
   }, [])
 
-  async function addMovieHandler(){
+  function addMovieHandler(){
     try {
-      const movie = await storeMovie(movieDetails)
-      movieCtx.addMovie(movie)
-      // const id = await storeMovie(movieDetails)
-      // movieCtx.addMovie({movieDetails, id: id})
+      movieCtx.addMovie(movieDetails)
       navigation.goBack();  
     } catch (error) {
       console.log(error)
     }
   }
 
-  async function removeMovieHandler(){
-    await deleteMovie(film.id)
+  function removeMovieHandler(){
     movieCtx.deleteMovie(film.id)
     navigation.goBack();
   }
