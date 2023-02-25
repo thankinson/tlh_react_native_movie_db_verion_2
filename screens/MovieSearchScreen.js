@@ -13,7 +13,6 @@ function MovieSearchScreen({navigation}){
 
   console.log(searchMovie)
 
-
   function navigateTo(item){
     navigation.navigate(
       'MovieDetailsScreen',

@@ -6,7 +6,6 @@ function ModalButton({children, onPress}){
       <Text onPress={onPress} style={styles.text} >
           {children} 
       </Text>
-   
   )
 };
 

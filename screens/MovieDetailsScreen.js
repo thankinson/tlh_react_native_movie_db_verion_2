@@ -6,7 +6,6 @@ import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
 import ButtonOptions from "../components/MovieDetails/ButtonOptions";
 
 import { MovieContext } from "../store/movie-context";
-import { deleteMovie, storeMovie } from "../utils/http";
 import { GlobalStyles } from "../constants/GlobalColors";
 
 function MovieDetailsScreen({route, navigation}){
@@ -61,7 +60,6 @@ function MovieDetailsScreen({route, navigation}){
   function closePressHandler(){
     navigation.goBack();
   }
-
 
   return (
     <View style={styles.container}>

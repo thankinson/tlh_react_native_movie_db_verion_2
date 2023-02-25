@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MovieList from "../components/movieSearch/MovieList";
 import { MovieContext } from "../store/movie-context";
-import { deleteMovie } from "../utils/http";
 import { GlobalStyles } from "../constants/GlobalColors";
 function MovieCollectionScreen({navigation}){
   const [myCollection, setMycollection] = useState([]);
@@ -49,7 +48,6 @@ function MovieCollectionScreen({navigation}){
       <MovieList onPress={navigateTo}  movieResult={myCollection}/>
     </View>
     )
-
 }
 
 export default MovieCollectionScreen;
