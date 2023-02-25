@@ -14,7 +14,7 @@ export default ModalButton;
 
 const styles = StyleSheet.create({
   text: {
-    color: 'blue',
+    color: 'red',
     fontStyle: 'italic',
     underline: {textDecorationLine: 'underline'}
   }

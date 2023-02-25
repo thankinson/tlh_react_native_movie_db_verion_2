@@ -1,18 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-import Button from "../components/ui/Button";
 import ModalButton from "../components/ui/ModalButton";
 import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
+import ButtonOptions from "../components/MovieDetails/ButtonOptions";
 
 import { MovieContext } from "../store/movie-context";
-import { fetchMovies } from "../utils/http";
+import { deleteMovie, storeMovie } from "../utils/http";
+import { GlobalStyles } from "../constants/GlobalColors";
 
 function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
-  const [movieAdd, setMovieAdd] = useState()
+  const [movieDetails, setMovieDetails] = useState()
   const [myCollection, setMycollection] = useState([]);
-
+  
   const movieCtx = useContext(MovieContext);
   const [isVisable, setIsVisable] = useState(false)
 
@@ -24,48 +25,24 @@ function MovieDetailsScreen({route, navigation}){
         poster: film.poster,
         movieId: film.movieId
       }
-      setMovieAdd(movieData)
+      setMovieDetails(movieData)
     }
     if (film){
       setFilm()
     }
-  }, [film])
+  }, [])
 
   useEffect(()=>{
     async function listMovies(){
-      const movies = await fetchMovies();
+      const movies = movieCtx.moviesInDb
       setMycollection(movies)
     }
-    
     listMovies()
-    
   }, [])
-/////////////////////////////////////////////////////////////////////////////////////////
-// this realy needs to be run before render
-  function checkDb(movie){
-    return movie.movieId === film.movieId
-  }
 
-  function ButtonOptions(){
-    if (myCollection.find(checkDb)) {
-      return <Button style={styles.addRemove} onPress={removeMovieHandler} buttonColor={styles.buttonColor}>remove</Button>
-    } else {
-      return <Button style={styles.addRemove} onPress={addMovieHandler} >add</Button>
-    }  
-
-  }
-////////////////////////////////////////////////////////////////////////////////////////////////
-  const selectedMovie = movieCtx.movies.find(
-    (movies) => movies.id 
-  )
-
-  function closePressHandler(){
-    navigation.goBack();
-  }
-
-  async function addMovieHandler(){
+  function addMovieHandler(){
     try {
-      movieCtx.addMovie({...movieAdd})
+      movieCtx.addMovie(movieDetails)
       navigation.goBack();  
     } catch (error) {
       console.log(error)
@@ -73,12 +50,18 @@ function MovieDetailsScreen({route, navigation}){
   }
 
   function removeMovieHandler(){
+    movieCtx.deleteMovie(film.id)
     navigation.goBack();
   }
 
   function onShowModal(){
     setIsVisable(true)
   }
+
+  function closePressHandler(){
+    navigation.goBack();
+  }
+
 
   return (
     <View style={styles.container}>
@@ -87,14 +70,18 @@ function MovieDetailsScreen({route, navigation}){
       </View>
       <Image style={styles.image} source={{uri: `https://image.tmdb.org/t/p/w300${film.poster}`}} />
       <Text style={styles.subTitle}>Synopsis</Text>
-      <Text>{film.overview.substr(0, 30)}... <ModalButton onPress={onShowModal} >read more</ModalButton></Text>
+      <Text style={styles.text}>{film.overview.substr(0, 30)}... <ModalButton onPress={onShowModal} >read more</ModalButton></Text>
         <MovieDescriptionModal 
           film={film} 
           setIsVisable={setIsVisable}
           isVisable={isVisable}
           />
       <View style={styles.addRemoveContainer}>
-        <ButtonOptions />
+        <ButtonOptions 
+          myCollection={myCollection} 
+          film={film}
+          removeMovie={removeMovieHandler} 
+          addMovie={addMovieHandler}/>
       </View>
     </View>
   )
@@ -106,8 +93,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    margin: 10,
-    marginTop: 40
+    padding: 10,
+    paddingTop: 40,
+    backgroundColor: GlobalStyles.colors.primary10
   },
   image:{
     width: 300,
@@ -115,16 +103,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
     elevation: 5,
     marginBottom: 10,
-    elevation: 4
+    elevation: 4,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'red'
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: GlobalStyles.colors.text01
   },
   subTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    padding: 10
+    padding: 10,
+    color: GlobalStyles.colors.text01
+  },
+  text: {
+    color: GlobalStyles.colors.text01
+
   },
   buttonContainer:{
     alignItems: 'center',
@@ -133,16 +130,11 @@ const styles = StyleSheet.create({
     width: 300,
     marginBottom: 10
   },
-  buttonColor: {
-    backgroundColor: 'red'
-  },
-  addRemove: {
-    width: 150
-  },
   addRemoveContainer: {
+    flex: 1,
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     flexDirection: 'row',
     marginTop: 15,
     borderTopColor: '#ccc',
