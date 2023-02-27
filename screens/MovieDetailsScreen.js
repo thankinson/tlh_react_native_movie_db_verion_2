@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 
 import ModalButton from "../components/ui/ModalButton";
 import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
+import CheckBox from "../components/ui/CheckBox";
 import ButtonOptions from "../components/MovieDetails/ButtonOptions";
 
 import { MovieContext } from "../store/movie-context";
@@ -12,6 +13,7 @@ function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
   const [movieDetails, setMovieDetails] = useState()
   const [myCollection, setMycollection] = useState([]);
+  const [format, setFormat] = useState();
   
   const movieCtx = useContext(MovieContext);
   const [isVisable, setIsVisable] = useState(false)
@@ -39,18 +41,38 @@ function MovieDetailsScreen({route, navigation}){
     listMovies()
   }, [])
 
+  function addMovie(){
+    console.log(movieDetails)
+    // movieCtx.addMovie(movieDetails)
+    // navigation.goBack(); 
+  }
   function addMovieHandler(){
+    const formatChoice = {format: format}
     try {
-      movieCtx.addMovie(movieDetails)
-      navigation.goBack();  
+      if (!format){
+        Alert.alert('Check Format', 'Please select format: DvD/Blu-Ray/4k', 
+        [{ text: 'Close', style: 'cancel' }])
+        return;
+      }
+      // movieCtx.addMovie(movieDetails)
+      // navigation.goBack();  
     } catch (error) {
       console.log(error)
     }
   }
 
-  function removeMovieHandler(){
+  function removeMovie(){
     movieCtx.deleteMovie(film.id)
     navigation.goBack();
+  }
+  function removeMovieHandler(){
+    Alert.alert('Remove Movie', 'Please Confirm', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {text: 'Remove movie', onPress: () => removeMovie()},
+    ]);
   }
 
   function onShowModal(){
