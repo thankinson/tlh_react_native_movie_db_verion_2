@@ -3,7 +3,6 @@ import { Alert, Image, StyleSheet, Text, View } from "react-native";
 
 import ModalButton from "../components/ui/ModalButton";
 import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
-import CheckBox from "../components/ui/CheckBox";
 import ButtonOptions from "../components/MovieDetails/ButtonOptions";
 
 import { MovieContext } from "../store/movie-context";
@@ -11,14 +10,18 @@ import { GlobalStyles } from "../constants/GlobalColors";
 
 function MovieDetailsScreen({route, navigation}){
   const { film } = route.params;
+
   const [movieDetails, setMovieDetails] = useState()
   const [myCollection, setMycollection] = useState([]);
-  const [format, setFormat] = useState();
+  const [options, setOptions] = useState()
+
+  const data = [{ value: 'DVD'}, {value: 'Blu-Ray'}, {value: '4k'}]
   
   const movieCtx = useContext(MovieContext);
   const [isVisable, setIsVisable] = useState(false)
 
   useEffect(()=>{
+    
     function setFilm(){
       const movieData = {
         title: film.title,
@@ -41,21 +44,15 @@ function MovieDetailsScreen({route, navigation}){
     listMovies()
   }, [])
 
-  function addMovie(){
-    console.log(movieDetails)
-    // movieCtx.addMovie(movieDetails)
-    // navigation.goBack(); 
-  }
   function addMovieHandler(){
-    const formatChoice = {format: format}
     try {
-      if (!format){
+      if (!options){
         Alert.alert('Check Format', 'Please select format: DvD/Blu-Ray/4k', 
         [{ text: 'Close', style: 'cancel' }])
         return;
       }
-      // movieCtx.addMovie(movieDetails)
-      // navigation.goBack();  
+      movieCtx.addMovie({...movieDetails, format: options})
+      navigation.goBack();  
     } catch (error) {
       console.log(error)
     }
@@ -97,7 +94,10 @@ function MovieDetailsScreen({route, navigation}){
           isVisable={isVisable}
           />
       <View style={styles.addRemoveContainer}>
-        <ButtonOptions 
+        <ButtonOptions
+          options={options} 
+          setOptions={setOptions}
+          data={data}
           myCollection={myCollection} 
           film={film}
           removeMovie={removeMovieHandler} 

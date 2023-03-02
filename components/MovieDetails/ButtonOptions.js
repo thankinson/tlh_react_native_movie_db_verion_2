@@ -1,25 +1,57 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import { GlobalStyles } from "../../constants/GlobalColors";
 import Button from "../ui/Button";
+import CheckBox from "../ui/CheckBox";
 
-function ButtonOptions({myCollection, addMovie, removeMovie, film}){
+function ButtonOptions({myCollection, addMovie, removeMovie, film, options, setOptions, data}){
   function checkDb(movie){
     return movie.movieId === film.movieId
   }
 
   if (myCollection.find(checkDb)) {
-    return <Button style={styles.addRemove} onPress={removeMovie} buttonColor={styles.buttonColor}>remove</Button>
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>{film.format}Hello</Text>
+        <Button style={styles.addRemove} onPress={removeMovie} buttonColor={styles.buttonColor}>remove</Button>
+      </View>
+      )
   } else {
-    return <Button style={styles.addRemove} onPress={addMovie} >add</Button>
+    return (
+    <>
+      <View style={styles.container}>
+        <View style={styles.checkBoxContainer}>
+          <CheckBox options={options} setOptions={setOptions} data={data} />
+        </View>
+        <Button style={styles.addRemove} onPress={addMovie} >add</Button>
+      </View>
+    </>)
   }  
 }
 
 export default ButtonOptions;
 
 const styles = StyleSheet.create({
+  container:{
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  checkBoxContainer:{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   buttonColor: {
     backgroundColor: 'red'
   },
   addRemove: {
     width: 150
   },
+  text: {
+    color: 'white',
+    fontSize: 18,
+    padding: 5
+  }
 })

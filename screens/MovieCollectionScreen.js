@@ -29,7 +29,8 @@ function MovieCollectionScreen({navigation}){
           movieId: item.movieId,
           title: item.title, 
           poster: item.poster,
-          overview: item.about
+          overview: item.about,
+          format: item.format
         }
       }
     )

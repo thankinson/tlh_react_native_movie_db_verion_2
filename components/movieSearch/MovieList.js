@@ -5,8 +5,7 @@ import ListButton from "./ListButton";
 function MovieList({movieResult, onPress}){
       
   return (  
-    <FlatList 
-      // contentContainerStyle={styles.listContainer}
+    <FlatList
       data={movieResult}
       renderItem={({item})=>
         <ListButton 
