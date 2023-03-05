@@ -20,7 +20,8 @@ function BottomTabNavigator(){
    screenOptions={{
     headerStyle: {backgroundColor: GlobalStyles.colors.primary01},
     headerTintColor: GlobalStyles.colors.text01,
-    tabBarStyle: { backgroundColor: GlobalStyles.colors.primary01}
+    tabBarStyle: { backgroundColor: GlobalStyles.colors.primary01},
+    tabBarShowLabel: false
    }}>
      <BottomTab.Screen 
       name="MovieSearchScreen" 
