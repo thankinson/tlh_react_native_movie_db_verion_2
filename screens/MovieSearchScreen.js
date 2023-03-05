@@ -7,6 +7,7 @@ import MovieList from "../components/movieSearch/MovieList";
 import InputText from "../components/movieSearch/InputText";
 import Button from "../components/ui/Button";
 import { GlobalStyles } from "../constants/GlobalColors";
+
 function MovieSearchScreen({navigation}){
   const [searchMovie, setMovieSearch] = useState('');
   const [movieResult, setMovieResult] = useState('');

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 20,
-    backgroundColor: 'grey',
+    backgroundColor: 'green',
     elevation: 4,
   },
   textColor: {

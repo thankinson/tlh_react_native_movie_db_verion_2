@@ -56,7 +56,7 @@ function MovieDetailsScreen({route, navigation}){
     } catch (error) {
       console.log(error)
     }
-  }
+  };
 
   function removeMovie(){
     movieCtx.deleteMovie(film.id)
@@ -70,7 +70,7 @@ function MovieDetailsScreen({route, navigation}){
       },
       {text: 'Remove movie', onPress: () => removeMovie()},
     ]);
-  }
+  };
 
   function onShowModal(){
     setIsVisable(true)
