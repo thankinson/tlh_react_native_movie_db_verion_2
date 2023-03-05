@@ -3,7 +3,7 @@ import { deleteMovie, fetchMovies, storeMovie } from "../utils/http";
 
 export const MovieContext = createContext({
   movies: [],
-  addMovie: ({title, about, poster, movieId}) => {},
+  addMovie: ({title, about, poster, movieId, format}) => {},
   setMovie: (movies) => {},
   deleteMovie: (id) => {}
 });
