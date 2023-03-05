@@ -1,4 +1,4 @@
-import { Modal, Text, Alert, View, StyleSheet } from "react-native";
+import { Modal, Text, View, StyleSheet } from "react-native";
 
 function MovieDescriptionModal({film, setIsVisable, isVisable}){
   return (
@@ -7,9 +7,6 @@ function MovieDescriptionModal({film, setIsVisable, isVisable}){
       animationType="slide"
       transparent={true}
       visible={isVisable}
-      // onRequestClose={() => {
-      //   Alert.alert('Modal has been closed.');
-      //   setIsVisable(!isVisable)}}
     >
       <View style={styles.modalConatiner}>
         <View style={styles.innerContainer}>
