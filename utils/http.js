@@ -1,13 +1,6 @@
 import axios from "axios"
 import {API_DB} from "@env"
 
-// export async function movieCheck(id){
-//   const response = await axios.get(`${API_DB}/mymovies?movieId=${id}`)
-//   console.log(response)
-//   const movieId = response
-//   return movieId
-// }
-
 export async function storeMovie(movieData){
   try {
     const response = await axios.post(`${API_DB}/mymovies.json`, movieData);
@@ -28,7 +21,8 @@ export async function fetchMovies(){
         movieId: response.data[key].movieId,
         title: response.data[key].title,
         about: response.data[key].about,
-        poster: response.data[key].poster
+        poster: response.data[key].poster,
+        format: response.data[key].format
       };
       myMovies.push(movieObj);
     };

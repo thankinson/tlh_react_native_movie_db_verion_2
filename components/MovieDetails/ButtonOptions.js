@@ -1,5 +1,4 @@
 import { StyleSheet, View, Text } from "react-native";
-import { GlobalStyles } from "../../constants/GlobalColors";
 import Button from "../ui/Button";
 import CheckBox from "../ui/CheckBox";
 
@@ -11,7 +10,7 @@ function ButtonOptions({myCollection, addMovie, removeMovie, film, options, setO
   if (myCollection.find(checkDb)) {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{film.format}Hello</Text>
+        <Text style={styles.text}>{film.format}</Text>
         <Button style={styles.addRemove} onPress={removeMovie} buttonColor={styles.buttonColor}>remove</Button>
       </View>
       )

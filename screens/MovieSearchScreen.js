@@ -11,8 +11,6 @@ function MovieSearchScreen({navigation}){
   const [searchMovie, setMovieSearch] = useState('');
   const [movieResult, setMovieResult] = useState('');
 
-  console.log(searchMovie)
-
   function navigateTo(item){
     navigation.navigate(
       'MovieDetailsScreen',
