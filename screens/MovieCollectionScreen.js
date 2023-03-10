@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import MovieList from "../components/movieSearch/MovieList";
 import { MovieContext } from "../store/movie-context";
 import { GlobalStyles } from "../constants/GlobalColors";
+
 function MovieCollectionScreen({navigation}){
   const [myCollection, setMycollection] = useState([]);
   const moviesCtx = useContext(MovieContext)

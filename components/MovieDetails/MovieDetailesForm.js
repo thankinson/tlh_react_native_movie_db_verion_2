@@ -1,20 +1,25 @@
 import { useContext, useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
-import { Ionicons } from '@expo/vector-icons'; // imports the Ionicans libray of useable images.
+import { Alert, StyleSheet, View } from "react-native";
 
-import { MovieContext } from "../store/movie-context";
-import { GlobalStyles } from "../constants/GlobalColors";
-import Button from "../components/ui/Button";
+import { MovieContext } from "../../store/movie-context";
+import { GlobalStyles } from "../../constants/GlobalColors";
+
+import MovieDetailHeader from "./MovieDetailHeader";
 import Poster from "./Poster";
 import AboutMovie from "./AboutMovie";
 import MovieDescriptionModal from "./DescriptionModal";
-import ButtonOptions from "../components/MovieDetails/ButtonOptions";
+import FilmTitle from "./FilmTitle";
+import ButtonOptions from "./ButtonOptions";
+
 // ###################################################################
 //
 //      this page is not curently active and is a work in progress. 
-//      this form is curently being broken down into componants.
-function MovieDetailsScreen({route, navigation}){
-  const { film } = route.params;
+//      Currently in this version the Format choices dont fit correctly in there div.
+//      this will be worked on
+//
+// ###################################################################
+
+function MovieDetailsForm({ navigation, closePressHandler, film}){
 
   const [movieDetails, setMovieDetails] = useState()
   const [myCollection, setMycollection] = useState([]);
@@ -56,8 +61,8 @@ function MovieDetailsScreen({route, navigation}){
         [{ text: 'Close', style: 'cancel' }])
         return;
       }
-      movieCtx.addMovie({...movieDetails, format: options})
-      navigation.goBack();  
+      movieCtx.addMovie({...movieDetails, format: options}) 
+      closePressHandler()
     } catch (error) {
       console.log(error)
     }
@@ -65,7 +70,7 @@ function MovieDetailsScreen({route, navigation}){
 
   function removeMovie(){
     movieCtx.deleteMovie(film.id)
-    navigation.goBack();
+    closePressHandler()
   }
   function removeMovieHandler(){
     Alert.alert('Remove Movie', 'Please Confirm', [
@@ -81,21 +86,14 @@ function MovieDetailsScreen({route, navigation}){
     setIsVisable(true)
   }
 
-  function closePressHandler(){
-    navigation.goBack();
-  }
-
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Button onPress={closePressHandler}><Ionicons name="arrow-back-sharp" size={12} color="black" />Go back</Button>
-      </View>
-
-      <View style={styles.buttonContainer}>
-        <Text style={styles.title}>{film.title}</Text>
-      </View>
+      <MovieDetailHeader onPress={closePressHandler} />
+ 
+      <FilmTitle film={film} />
 
       <Poster poster={film.poster}/>
+
       <AboutMovie film={film} onPress={onShowModal}/>
 
       <MovieDescriptionModal 
@@ -104,8 +102,7 @@ function MovieDetailsScreen({route, navigation}){
         isVisable={isVisable}
         />
 
-      <View style={styles.addRemoveContainer}>
-        <ButtonOptions
+      <ButtonOptions
           options={options} 
           setOptions={setOptions}
           data={data}
@@ -113,13 +110,13 @@ function MovieDetailsScreen({route, navigation}){
           film={film}
           removeMovie={removeMovieHandler} 
           addMovie={addMovieHandler}/>
+          
       </View>
 
-    </View>
   )
 }
 
-export default MovieDetailsScreen;
+export default MovieDetailsForm;
 
 const styles = StyleSheet.create({
   container: {
@@ -128,36 +125,5 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 40,
     backgroundColor: GlobalStyles.colors.primary10
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: GlobalStyles.colors.text01
-  },
-  buttonContainer:{
-    alignItems: 'center',
-  },
-  button: {
-    width: 300,
-    marginBottom: 10
-  },
-  addRemoveContainer: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginTop: 15,
-    borderTopColor: '#ccc',
-    borderTopWidth: 1,
-    padding: 20
-  },
-  headerContainer:{
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flexDirection: 'row'
   }
-
 })

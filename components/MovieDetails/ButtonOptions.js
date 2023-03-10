@@ -9,21 +9,25 @@ function ButtonOptions({myCollection, addMovie, removeMovie, film, options, setO
 
   if (myCollection.find(checkDb)) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>{film.format}</Text>
-           <Button style={styles.addRemove} onPress={removeMovie} buttonColor={styles.buttonColor}>remove</Button>
+      <View style={styles.addRemoveContainer}>
+        <View style={styles.container}>
+          <Text style={styles.text}>{film.format}</Text>
+            <Button style={styles.addRemove} onPress={removeMovie} buttonColor={styles.buttonColor}>remove</Button>
+        </View>
       </View>
       )
   } else {
     return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.checkBoxContainer}>
-          <CheckBox options={options} setOptions={setOptions} data={data} />
+
+      <View style={styles.addRemoveContainer}>
+        <View style={styles.container}>
+          <View style={styles.checkBoxContainer}>
+            <CheckBox options={options} setOptions={setOptions} data={data} />
+          </View>
+          <Button style={styles.addRemove} onPress={addMovie} >add</Button>
         </View>
-        <Button style={styles.addRemove} onPress={addMovie} >add</Button>
       </View>
-    </>)
+    )
   }  
 }
 
@@ -52,5 +56,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     padding: 5
+  },
+  addRemoveContainer: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: 15,
+    borderTopColor: '#ccc',
+    borderTopWidth: 1,
+    padding: 20
   }
 })

@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import ModalButton from "../ui/ModalButton";
-import MovieDescriptionModal from "../components/MovieDetails/DescriptionModal";
+import { GlobalStyles } from "../../constants/GlobalColors";
 
 function AboutMovie({film, onPress}){
   return (
