@@ -49,9 +49,9 @@ Version 1 dose not contain a search function for your collection database (this 
 #
 ## Version 2 comming soon...... ish
 In version 2 the features the app will be reciving include:
-1. Warning when you try to remove a movie from the database.
-2. Movie format, to show what you  have it on DVD/Blu-ray/4k
-3. Different colour button in Movie search to indicate what film is already in collection.
+1. Warning when you try to remove a movie from the database. -- Added
+2. Movie format, to show what you  have it on DVD/Blu-ray/4k. -- Added
+3. Different colour button in Movie search to indicate what film is already in collection. -- Added.. Instead db is checked and if movie in db remove button displayed
 
 ### Possible Extras 
 1. SQLite database (possible Version 3) with add/remove and export db
