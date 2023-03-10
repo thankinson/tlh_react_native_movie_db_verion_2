@@ -11,7 +11,7 @@ function ButtonOptions({myCollection, addMovie, removeMovie, film, options, setO
     return (
       <View style={styles.container}>
         <Text style={styles.text}>{film.format}</Text>
-        <Button style={styles.addRemove} onPress={removeMovie} buttonColor={styles.buttonColor}>remove</Button>
+           <Button style={styles.addRemove} onPress={removeMovie} buttonColor={styles.buttonColor}>remove</Button>
       </View>
       )
   } else {
